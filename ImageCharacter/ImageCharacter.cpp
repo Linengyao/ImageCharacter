@@ -14,16 +14,20 @@ int main()
 	cv::Mat  OpenMat;
 	cv::Mat CloseMat;
 	//二值化
-	threshold(srcMat, BinaryMat, 120, 255, THRESH_BINARY);
+	threshold(srcMat, BinaryMat, 100, 255, THRESH_BINARY);
+
+	Mat element = getStructuringElement(MORPH_ELLIPSE, Size(3, 3));		//矩形 9*9
 
 	//腐蚀
-	morphologyEx(BinaryMat, ErodeMat, MORPH_ERODE,MORPH_RECT);
+	//erode(BinaryMat, ErodeMat, MORPH_RECT);
+	morphologyEx(BinaryMat, ErodeMat, MORPH_ERODE,element);
+
 	//膨胀
-	morphologyEx(BinaryMat, DilateMat, MORPH_DILATE, MORPH_RECT);
+	morphologyEx(BinaryMat, DilateMat, MORPH_DILATE,element);
 	//开运算
-	morphologyEx(BinaryMat, OpenMat, MORPH_OPEN, MORPH_RECT);
+	morphologyEx(BinaryMat, OpenMat, MORPH_OPEN,  element);
 	//闭运算
-	morphologyEx(BinaryMat, CloseMat, MORPH_CLOSE, MORPH_RECT);
+	morphologyEx(BinaryMat, CloseMat, MORPH_CLOSE, element);
 
 
 	imshow("bMat", BinaryMat);

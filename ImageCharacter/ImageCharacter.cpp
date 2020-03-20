@@ -2,10 +2,39 @@
 //
 
 #include <iostream>
-
+#include <opencv.hpp>
+using namespace cv;
+using namespace std;
 int main()
 {
-    std::cout << "Hello World!\n";
+	cv::Mat srcMat = imread("E:\\课程\\数字图像处理\\coin.png");
+	cv::Mat BinaryMat;
+	cv::Mat ErodeMat;
+	cv::Mat DilateMat;
+	cv::Mat  OpenMat;
+	cv::Mat CloseMat;
+	//二值化
+	threshold(srcMat, BinaryMat, 120, 255, THRESH_BINARY);
+
+	//腐蚀
+	morphologyEx(BinaryMat, ErodeMat, MORPH_ERODE,MORPH_RECT);
+	//膨胀
+	morphologyEx(BinaryMat, DilateMat, MORPH_DILATE, MORPH_RECT);
+	//开运算
+	morphologyEx(BinaryMat, OpenMat, MORPH_OPEN, MORPH_RECT);
+	//闭运算
+	morphologyEx(BinaryMat, CloseMat, MORPH_CLOSE, MORPH_RECT);
+
+
+	imshow("bMat", BinaryMat);
+	imshow("ErodeMat", ErodeMat);
+	imshow("DilateMat", DilateMat);
+	imshow("OpenMat", OpenMat);
+	imshow("CloseMat", CloseMat);
+	waitKey(0);
+	return 0;
+
+    //std::cout << "Hello World!\n";
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
